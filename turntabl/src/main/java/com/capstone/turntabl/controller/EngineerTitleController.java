@@ -7,6 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/engineer-titles")
@@ -24,16 +26,22 @@ public class EngineerTitleController {
             return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity<?> deleteEngineerTitle(@PathVariable("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<EngineerTitleDto> deleteEngineerTitle(@PathVariable("id") Long id) {
         engineerTitleService.deleteEngineerTitle(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<EngineerTitleDto> getEngineerTitleById(@PathVariable("id") Long id) {
         EngineerTitleDto dto = engineerTitleService.getEngineerTitleById(id);
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<EngineerTitleDto>> getAllEngineerTitles() {
+        List<EngineerTitleDto> titles = engineerTitleService.getAllEngineerTitles();
+        return ResponseEntity.ok(titles);
     }
 
     @PutMapping(path = "/{id}")
