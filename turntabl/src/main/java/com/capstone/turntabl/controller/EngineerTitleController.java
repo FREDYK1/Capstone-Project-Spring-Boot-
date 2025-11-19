@@ -1,14 +1,14 @@
 package com.capstone.turntabl.controller;
 
 import com.capstone.turntabl.dto.EngineerTitleDto;
- import com.capstone.turntabl.services.EngineerTitleService;
+import com.capstone.turntabl.services.EngineerTitleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/engineer-titles")
@@ -19,11 +19,10 @@ public class EngineerTitleController {
         this.engineerTitleService = engineerTitleService;
     }
 
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EngineerTitleDto> createEngineerTitle(@RequestBody EngineerTitleDto engineerTitleDto) {
-            EngineerTitleDto saved = engineerTitleService.createEngineerTitle(engineerTitleDto);
-            return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        EngineerTitleDto saved = engineerTitleService.createEngineerTitle(engineerTitleDto);
+        return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -39,9 +38,16 @@ public class EngineerTitleController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<EngineerTitleDto>> getAllEngineerTitles() {
+    public ResponseEntity<List<EngineerTitleDto>> getAllEngineerTitles(
+            @RequestParam(value = "isActive", required = false) Boolean isActive) {
         List<EngineerTitleDto> titles = engineerTitleService.getAllEngineerTitles();
-        return ResponseEntity.ok(titles);
+        if (isActive == null) {
+            return ResponseEntity.ok(titles);
+        }
+        List<EngineerTitleDto> filtered = titles.stream()
+                .filter(dto -> Boolean.TRUE.equals(dto.getIsActive()) == Boolean.TRUE.equals(isActive))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(filtered);
     }
 
     @PutMapping(path = "/{id}")
