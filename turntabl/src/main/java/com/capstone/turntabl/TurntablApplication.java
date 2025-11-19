@@ -9,5 +9,4 @@ public class TurntablApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TurntablApplication.class, args);
 	}
-
 }
