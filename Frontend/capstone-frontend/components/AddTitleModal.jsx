@@ -7,7 +7,7 @@ export default function AddTitleModal({ isOpen, onClose, onSubmit, newTitle, set
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
             <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full mx-4">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">{isEditing ? 'Edit Title' : 'Add New Title'}</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
