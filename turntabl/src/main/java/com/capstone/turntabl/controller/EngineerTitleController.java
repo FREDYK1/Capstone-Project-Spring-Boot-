@@ -2,6 +2,7 @@ package com.capstone.turntabl.controller;
 
 import com.capstone.turntabl.dto.EngineerTitleDto;
 import com.capstone.turntabl.services.EngineerTitleService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,8 @@ public class EngineerTitleController {
         this.engineerTitleService = engineerTitleService;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EngineerTitleDto> createEngineerTitle(@RequestBody EngineerTitleDto engineerTitleDto) {
+    @PostMapping
+    public ResponseEntity<EngineerTitleDto> createEngineerTitle(@Valid @RequestBody EngineerTitleDto engineerTitleDto) {
         EngineerTitleDto saved = engineerTitleService.createEngineerTitle(engineerTitleDto);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
@@ -51,7 +52,7 @@ public class EngineerTitleController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<EngineerTitleDto> updateEngineerTitle(@PathVariable("id") Long id, @RequestBody EngineerTitleDto engineerTitleDto) {
+    public ResponseEntity<EngineerTitleDto> updateEngineerTitle(@PathVariable("id") Long id, @Valid @RequestBody EngineerTitleDto engineerTitleDto) {
         EngineerTitleDto updatedDto = engineerTitleService.updateEngineerTitle(id, engineerTitleDto);
         return ResponseEntity.ok(updatedDto);
     }
