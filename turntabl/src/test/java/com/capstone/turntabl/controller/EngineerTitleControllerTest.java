@@ -1,6 +1,5 @@
-package com.capstone.turntabl.APIs;
+package com.capstone.turntabl.controller;
 
-import com.capstone.turntabl.controller.EngineerTitleController;
 import com.capstone.turntabl.dto.EngineerTitleDto;
 import com.capstone.turntabl.exception.ResourceNotFoundException;
 import com.capstone.turntabl.services.EngineerTitleService;
